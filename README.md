@@ -1,6 +1,6 @@
 # create-next-app
 
-22.09.26
+22.09.26  
 next.js typescript 프로젝트 생성
 
 ```
