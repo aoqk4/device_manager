@@ -10,7 +10,7 @@ next.js typescript 프로젝트 생성
 # tailwind CSS 적용
 
 1. tailwindCSS설치  
-   -[tailwind CSS 설치 링크](https://tailwindcss.com/docs/guides)
+   -[tailwind CSS 설치 링크](https://tailwindcss.com/docs/installation/framework-guides)
 
 2. 프로젝트 생성 이후
    ```
@@ -20,4 +20,61 @@ next.js typescript 프로젝트 생성
 3. 이후 이하 링크의 3. 부터 적용(next.js 프레임 워크 기준)  
    -[tailwind in next.js](https://tailwindcss.com/docs/guides/nextjs)
 
-#prisma
+# Prisma
+
+## DB ORM 이다.
+
+## 설치 방법.
+
+1. VSCODE `prisma` 확장 프로그램 설치. (확장프로그램 설정은 알림창에서 확인가능(prettire와 겹친다.))
+
+2. `prisma` 패키지 설치
+
+```
+> npm i prisma -D
+> npx prisma init
+```
+
+3. `prisma` 폴더와 함께 .env 파일 생성됨 (`.gitignore`에 `.env` 추가하여 커밋 무시하자..)
+
+```
+# .env for prisma
+.env
+```
+
+4. `.env` 파일에 `DATABASE_URL`변수에 DB의 주소를 넣도록 한다.
+
+```
+DATABASE_URL="DB_URL"
+```
+
+5. `prisma` 폴더에 있는 `schema.prisma`에 사용할 DB 종류를 넣는다.
+
+- 사용 가능한 DB = `postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.`
+
+```
+datasource db {
+   provider = "mongodb"
+   url      = env("DATABASE_URL")
+}
+```
+
+6. model에 스키마를 설계한다. model `collectionName`
+
+```
+model User {
+   id       String   @id @default(auto()) @map("_id") @db.ObjectId
+   name     String
+   age      Int
+   addr     String
+   favfood  String?  @default("없음")
+   createAt DateTime @default(now())
+   updateAt DateTime @updatedAt
+}
+```
+
+7. 데이터베이스 서버에 업로드 시킬 때는 아래 명령어 사용한다.(cmd 명령어)
+
+```
+>npx prisma db push
+```

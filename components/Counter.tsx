@@ -8,7 +8,7 @@ const Counter = (props: CounterProps) => {
   const { title } = props;
   const [cnt, setCnt] = useState(0);
   return (
-    <div>
+    <div className="bg-slate-300">
       <h2>{title.toString()}</h2>
       <h2>카운터 {cnt}</h2>
       <button
