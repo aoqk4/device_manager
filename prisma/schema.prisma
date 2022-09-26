@@ -15,9 +15,9 @@ model User {
   name     String
   age      Int
   addr     String
-  favfood  String?  @default("없음")
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  favfood  String?  @default("없음") // ?로 선택적 요소 설정 가능.
+  createAt DateTime @default(now()) // 현재 시각
+  updateAt DateTime @updatedAt // 업데이트 시각    
 }
 
 model Post {

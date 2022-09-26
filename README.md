@@ -26,7 +26,7 @@ next.js typescript 프로젝트 생성
 
 ## 설치 방법.
 
-1. VSCODE `prisma` 확장 프로그램 설치. (확장프로그램 설정은 알림창에서 확인가능(prettire와 겹친다.))
+1. VSCODE `prisma` 확장 프로그램 설치. (확장프로그램 설정은 알림창에서 확인가능(prettier와 겹친다.))
 
 2. `prisma` 패키지 설치
 
@@ -48,9 +48,9 @@ next.js typescript 프로젝트 생성
 DATABASE_URL="DB_URL"
 ```
 
-5. `prisma` 폴더에 있는 `schema.prisma`에 사용할 DB 종류를 넣는다.
+5. `prisma` 폴더에 있는 `schema.prisma`파일 `provider`변수에 사용할 DB 종류를 넣는다.
 
-- 사용 가능한 DB = `postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.`
+- 사용 가능한 DB = `postgresql`, `mysql`, `sqlite`, `sqlserver`, `mongodb` or `cockroachdb`
 
 ```
 datasource db {
@@ -63,13 +63,13 @@ datasource db {
 
 ```
 model User {
-   id       String   @id @default(auto()) @map("_id") @db.ObjectId
+   id       String   @id @default(auto()) @map("_id") @db.ObjectId      // id 지정형식은 고정이다.
    name     String
    age      Int
    addr     String
    favfood  String?  @default("없음")
-   createAt DateTime @default(now())
-   updateAt DateTime @updatedAt
+   createAt DateTime @default(now())      // 현재시각
+   updateAt DateTime @updatedAt           // 업데이트 시각
 }
 ```
 
@@ -77,4 +77,71 @@ model User {
 
 ```
 >npx prisma db push
+```
+
+- prisma에서 제공하는 Web Client 실행 방법. (실행 중에만 접속이 가능하다.)
+
+```
+>npx prisma studio
+```
+
+- `prisma` Client 설정 방법.
+
+```
+> npx prisma generate
+```
+
+### petch 활용 방식
+
+```
+fetch("/api/alluser")
+      .then((res) => res.json())
+      .then((json) => console.log(json));
+```
+
+### prisma CRUD
+
+[prisma CRUD Docs](https://www.prisma.io/docs/concepts/components/prisma-client/crud)
+
+1. `prisma` Client Create Example
+
+```
+// DB to Create
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  try {
+    const user = await client.user.create({
+      data: { name: "홍길순", age: 25, addr: "아산시" },
+    });
+    res.status(200).json({ name: "OKOK" });
+  } catch (err) {
+    res.status(200).json({ name: "NGNGNG" });
+    console.log(err);
+  }
+}
+```
+
+2. `prisma` Client Read Example
+
+```
+interface resDataType {
+  name: String;
+  users: User[];
+}
+
+// DB to Read All
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<resDataType>
+) {
+  try {
+    const users = await client.user.findMany();
+    console.log(users);
+    res.status(200).json({ name: "OKOK", users });
+  } catch (err) {
+    console.log(err);
+  }
+}
 ```
