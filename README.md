@@ -94,9 +94,19 @@ model User {
 ### petch 활용 방식
 
 ```
-fetch("/api/alluser")
-      .then((res) => res.json())
-      .then((json) => console.log(json));
+fetch(`http://localhost:3000/api/user/update/${targetId}`, {
+  method: "POST",
+  body: JSON.stringify(data),
+});
+```
+
+```
+fetch(`http://localhost:3000/api/user/delete/${targetId}`)
+  .then((res) => res.json())
+  .then((json) => {
+    console.log(json.deletedId);
+    setUsers(users.filter((user) => user.id !== json.deletedId));
+});
 ```
 
 ### typescript를 한줄 우회하는 방법(급하지 않다면 사용하지 말 것.)
