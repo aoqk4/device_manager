@@ -9,6 +9,24 @@ const Home: NextPage = () => {
   const [product, setProduct] = useState("");
   const [memo, setMemo] = useState("");
 
+  const tDeviceObj = {
+    location: location,
+    unit: unit,
+    product: product,
+    memo: memo,
+  };
+
+  const addTestDevice = () => {
+    console.log("등록");
+    fetch("http://localhost:3000/api/testdevice/addtdevice", {
+      method: "POST",
+      body: JSON.stringify(tDeviceObj),
+    })
+      .then((res) => res.json())
+      .then((json) => console.log(json));
+    console.log("등록완료");
+  };
+
   function 장비추가버튼클릭() {
     document.querySelector("#container_add_device")?.classList.toggle("hidden");
     setLocation("");
@@ -79,7 +97,12 @@ const Home: NextPage = () => {
               onChange={(e) => setMemo(e.currentTarget.value)}
               className="h-12 ring-2 ring-black text-gray-800 px-2"
             ></input>
-            <button className="w-full rounded-lg py-5 sunmoon_btn">등록</button>
+            <button
+              className="w-full rounded-lg py-5 sunmoon_btn"
+              onClick={addTestDevice}
+            >
+              등록
+            </button>
           </div>
           <hr></hr>
         </div>

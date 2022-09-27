@@ -27,3 +27,21 @@ model Post {
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
+
+model testDevice {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  product           String
+  location          String
+  unit              String?
+  memo              String?
+  createAt          DateTime            @default(now())
+  updateAt          DateTime            @updatedAt
+  testDeviceSencing testDeviceSencing[]
+}
+
+model testDeviceSencing {
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  value    Int
+  device   testDevice? @relation(fields: [deviceid], references: [id])
+  deviceid String
+}
