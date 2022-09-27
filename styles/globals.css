@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.sunmoon_btn {
+  @apply bg-[#6ab5fd] hover:bg-[#49a7ff] p-5 rounded-lg dark:bg-[#3c3d44] hover:dark:bg-[#343644] items-center;
+}
