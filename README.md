@@ -99,6 +99,12 @@ fetch("/api/alluser")
       .then((json) => console.log(json));
 ```
 
+### typescript를 한줄 우회하는 방법(급하지 않다면 사용하지 말 것.)
+
+```
+// @ts-ignore
+```
+
 ### prisma CRUD
 
 [prisma CRUD Docs](https://www.prisma.io/docs/concepts/components/prisma-client/crud)
@@ -141,6 +147,32 @@ export default async function handler(
     console.log(users);
     res.status(200).json({ name: "OKOK", users });
   } catch (err) {
+    console.log(err);
+  }
+}
+```
+
+3. `prisma` Client Delete Example
+
+```
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  try {
+    console.log(req.query.id);
+
+    const deleteUser = await client.user.delete({
+      where: {
+        id: req.query.id?.toString(),
+      },
+    });
+
+    console.log(deleteUser);
+
+    res.status(200).json({ ok: true, deletedId: deleteUser.id });
+  } catch (err) {
+    res.status(200).json({ ok: false, err: `${err}` });
     console.log(err);
   }
 }
