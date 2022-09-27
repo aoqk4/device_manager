@@ -155,6 +155,7 @@ export default async function handler(
 3. `prisma` Client Delete Example
 
 ```
+// DB to Delete in new [id].ts file
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -171,6 +172,44 @@ export default async function handler(
     console.log(deleteUser);
 
     res.status(200).json({ ok: true, deletedId: deleteUser.id });
+  } catch (err) {
+    res.status(200).json({ ok: false, err: `${err}` });
+    console.log(err);
+  }
+}
+```
+
+4. `prisma` Client Update Example
+
+```
+// DB to Update in new [id].ts file
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  if (req.method !== "POST") {
+    return res
+      .status(405)
+      .json({ ok: false, err: "지원하지 않는 메서드 입니다." });
+  }
+  try {
+    console.log(req.body.name);
+
+    const obj = JSON.parse(req.body);
+
+    if (!obj.name) {
+      return res.status(200).json({ ok: false, err: "이름을 입력하세요.." });
+    }
+
+    const updateUser = await client.user.update({
+      where: {
+        id: req.query.id?.toString(),
+      },
+      data: {
+        name: obj.name,
+      },
+    });
+    res.status(200).json({ ok: true });
   } catch (err) {
     res.status(200).json({ ok: false, err: `${err}` });
     console.log(err);

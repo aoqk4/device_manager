@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { env } from "process";
 
 const Home: NextPage = () => {
+  const [rename, setRename] = useState("");
   const [users, setUsers] = useState<User[]>([]);
   const router = useRouter();
 
@@ -35,6 +36,21 @@ const Home: NextPage = () => {
       });
   };
 
+  const 이름변경 = (targetId: String) => {
+    if (!rename) {
+      return;
+    }
+
+    const data = { name: rename };
+
+    fetch(`http://localhost:3000/api/user/update/${targetId}`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    console.log(`${targetId}, ${rename}`);
+  };
+
   return (
     <div>
       <h1>Hello World</h1>
@@ -47,12 +63,26 @@ const Home: NextPage = () => {
         {users.map((user) => {
           {
             return (
-              <div key={user.id} className="border-2 bg-red-200">
+              <div key={user.id} className="border-2 bg-purple-100">
                 <span>{user.name}</span> <span>{user.age}</span>
                 <div>{user.addr}</div>
                 <div>{user.favfood}</div>
                 <div className="text-slate-300">{user.createAt.toString()}</div>
                 <div>{user.id}</div>
+                <div>
+                  <input
+                    type={"text"}
+                    className="border"
+                    value={rename}
+                    onChange={(e) => setRename(e.currentTarget.value)}
+                  ></input>
+                  <button
+                    onClick={() => 이름변경(user.id)}
+                    className="bg-gray-300 text-red-600 px-1 rounded hover:bg-gray-500"
+                  >
+                    수정
+                  </button>
+                </div>
                 <div>
                   <button
                     className="bg-gray-500 text-red-600 px-1 rounded hover:bg-gray-700"
