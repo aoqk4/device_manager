@@ -22,6 +22,10 @@ const Home: NextPage = () => {
   }, []);
 
   const submitVal = () => {
+    // const bNumber = /[0-9]/.test(); // 문자열을 체크할 수 있는 정규 식이다.
+
+    // if(Number.parseInt()) 숫자를 체크할수 있는
+
     if (!id || !changeval) {
       alert("모든 사항에 기입 해주세요.");
       setChangeVal(0.0);

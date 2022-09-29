@@ -10,12 +10,10 @@ const Home: NextPage = () => {
   const [chk, setChk] = useState(false);
 
   useEffect(() => {
-    console.log(chk);
-
     fetch("http://localhost:3000/api/testdevice/all")
       .then((res) => res.json())
       .then((json) => setDevice(json.allDevice));
-  }, [chk]);
+  }, [chk, devices]);
 
   return (
     <Layout title={"HOME"}>

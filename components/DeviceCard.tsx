@@ -21,7 +21,6 @@ export default function DeviceCard({ device, chk }: DeviceCardProps) {
         setTimeId(
           window.setInterval(() => {
             setCnt((prev) => prev + 1);
-            console.log(cnt);
           }, 3000)
         );
       }

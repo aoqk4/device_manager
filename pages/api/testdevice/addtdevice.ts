@@ -66,16 +66,11 @@ export default async function handler(
       },
     });
 
-    // const tdeviceSencing = await client.testDeviceSencing.create({
-    //   data: {
-    //     value: 25,
-    //     deviceid: tdevice.id,
-    //   },
-    // });
-
     response.status(200).json({ ok: true, tdevice });
   } catch (err) {
     response.status(200).json({ ok: false, msg: `${err}` });
     console.log(err);
+  } finally {
+    await client.$disconnect();
   }
 }
