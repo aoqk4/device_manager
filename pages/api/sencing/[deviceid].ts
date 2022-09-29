@@ -29,8 +29,6 @@ export default async function handler(
       },
     });
 
-    console.log(rDevice);
-
     response.status(200).json({ ok: true, value: rDevice?.value });
   } catch (err) {
     response.status(200).json({ ok: false, msg: `${err}` });

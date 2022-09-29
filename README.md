@@ -252,3 +252,9 @@ model testDeviceSencing {
 }
 
 ```
+
+- 앞으로의 목표
+
+  1. localStorage에 다크모드 정보 저장해서 불러올수 있도록.
+  2. type에 맞는 unit 설정해서 text에 넣을수 있도록.
+  3. 실시간으로 값이 변경되면 강조할 수 있게.

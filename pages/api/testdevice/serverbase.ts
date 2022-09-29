@@ -27,6 +27,7 @@ export default async function handler(
     response.status(200).json({ ok: false, msg: `${err}` });
     console.log(err);
   } finally {
+    // 예외가 있건 없건 연결을 끊어줘야한다..
     await client.$disconnect();
   }
 }

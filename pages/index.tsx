@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeviceCard from "../components/DeviceCard";
 import Layout from "../components/Layout";
+import { PacmanLoader, SyncLoader } from "react-spinners";
+
+import Toggle from "react-toggle";
 
 const Home: NextPage = () => {
   const [devices, setDevice] = useState<testDevice[]>([]);
@@ -46,20 +49,16 @@ const Home: NextPage = () => {
         </div>
         <div id="링크드유" className="flex justify-between items-center">
           <div className="text-3xl font-bold">Linked to You</div>
-          <div className="">
+          <div className="select-none flex items-center space-x-2">
             {/* <input type={"checkbox"} onChange={() => setChk(!chk)}></input> */}
-            <label
-              htmlFor="default-toggle"
-              className="inline-flex relative items-center cursor-pointer"
-            >
-              <input
-                onChange={() => setChk(!chk)}
-                type="checkbox"
-                value=""
-                id="default-toggle"
-                className="sr-only peer"
-              ></input>
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <div>{chk ? <SyncLoader color="#36d7b7" /> : ""}</div>
+            <Toggle
+              id="cheese-status"
+              onChange={() => setChk(!chk)}
+              defaultChecked={chk}
+            ></Toggle>
+            <label htmlFor="cheese-status">
+              실시간 <span>{chk ? "On" : "Off"}</span>
             </label>
             <div className="flex justify-center">
               <div className="form-check form-switch"></div>

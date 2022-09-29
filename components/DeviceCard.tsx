@@ -1,5 +1,6 @@
 import { testDevice } from "@prisma/client";
 import { useEffect, useState } from "react";
+import { cls } from "../libs/client/utils";
 
 type DeviceCardProps = {
   device: testDevice;
@@ -10,11 +11,20 @@ export default function DeviceCard({ device, chk }: DeviceCardProps) {
   const [val, setVal] = useState(0);
   const [timeId, setTimeId] = useState(0);
   const [cnt, setCnt] = useState(0);
+  const [chn, setChn] = useState("");
 
   useEffect(() => {
     fetch(`api/sencing/${device.id}`)
       .then((res) => res.json())
-      .then((json) => setVal(json.value));
+      .then((json) => {
+        setVal(json.value);
+        if (json.value !== val) {
+          setChn("text-red-500");
+          setTimeout(() => {
+            setChn("");
+          }, 1000);
+        }
+      });
 
     if (chk) {
       if (0 === timeId) {
@@ -40,7 +50,9 @@ export default function DeviceCard({ device, chk }: DeviceCardProps) {
         data-comment="장비카드"
       >
         <div className="flex justify-end">
-          <span className="text-5xl font-bold">{val ? val : "-"}</span>
+          <span className={cls("text-5xl font-bold", chn)}>
+            {val ? val : "-"}
+          </span>
           <span className="text-2xl text-gray-500 dark:text-gray-400">%</span>
         </div>
         <div className="flex flex-col">

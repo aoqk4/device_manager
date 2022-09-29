@@ -27,11 +27,9 @@ const Home: NextPage = () => {
   }, []);
 
   const 사용자삭제 = (targetId: string) => {
-    console.log(targetId);
     fetch(`http://localhost:3000/api/user/delete/${targetId}`)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.deletedId);
         setUsers(users.filter((user) => user.id !== json.deletedId));
       });
   };

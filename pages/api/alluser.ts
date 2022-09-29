@@ -23,5 +23,7 @@ export default async function handler(
     res.status(200).json({ name: "OKOK", users });
   } catch (err) {
     console.log(err);
+  } finally {
+    await client.$disconnect();
   }
 }
