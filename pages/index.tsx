@@ -1,8 +1,22 @@
+import { testDevice } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import DeviceCard from "../components/DeviceCard";
 import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
+  const [devices, setDevice] = useState<testDevice[]>([]);
+  const [chk, setChk] = useState(false);
+
+  useEffect(() => {
+    console.log(chk);
+
+    fetch("http://localhost:3000/api/testdevice/all")
+      .then((res) => res.json())
+      .then((json) => setDevice(json.allDevice));
+  }, [chk]);
+
   return (
     <Layout title={"HOME"}>
       <div className="h-full overflow-y-scroll space-y-7">
@@ -34,31 +48,30 @@ const Home: NextPage = () => {
         </div>
         <div id="링크드유" className="flex justify-between items-center">
           <div className="text-3xl font-bold">Linked to You</div>
-          <div className="">실시간 버튼 자리..</div>
+          <div className="">
+            {/* <input type={"checkbox"} onChange={() => setChk(!chk)}></input> */}
+            <label
+              htmlFor="default-toggle"
+              className="inline-flex relative items-center cursor-pointer"
+            >
+              <input
+                onChange={() => setChk(!chk)}
+                type="checkbox"
+                value=""
+                id="default-toggle"
+                className="sr-only peer"
+              ></input>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            </label>
+            <div className="flex justify-center">
+              <div className="form-check form-switch"></div>
+            </div>
+            <div className="flex justify-center"></div>
+          </div>
         </div>
         <div id="센서목록" className="flex flex-wrap">
-          {[1, 1, 1, 1, 1, 1, 1, 1, 1].map((device, idx) => {
-            return (
-              <div
-                className="bg-[#7cd0fa] border-2 w-60 h-52 p-4 flex flex-col justify-between rounded-xl m-5
-                dark:bg-[#2d3134] dark:border-[#454449]"
-                data-comment="장비카드"
-                key={idx}
-              >
-                <div className="flex justify-end">
-                  <span className="text-5xl font-bold">25</span>
-                  <span className="text-2xl text-gray-500 dark:text-gray-400">
-                    %
-                  </span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-gray-500 dark:text-gray-400">
-                    안방 - 메모
-                  </span>
-                  <span className="font-bold text-xl">사오미 공기 청정기</span>
-                </div>
-              </div>
-            );
+          {devices.map((device, idx) => {
+            return <DeviceCard key={idx} device={device} chk={chk} />;
           })}
         </div>
       </div>

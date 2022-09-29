@@ -28,10 +28,17 @@ model Post {
   updateAt DateTime @updatedAt
 }
 
+enum DeviceType {
+  TEMP
+  HUMI
+  CO2
+}
+
 model testDevice {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   product           String
-  location          String
+  location          String              @default("거실")
+  type              DeviceType
   unit              String?
   memo              String?
   createAt          DateTime            @default(now())
@@ -40,8 +47,10 @@ model testDevice {
 }
 
 model testDeviceSencing {
-  id       String      @id @default(auto()) @map("_id") @db.ObjectId
-  value    Int
-  device   testDevice? @relation(fields: [deviceid], references: [id])
-  deviceid String
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  value        Float
+  createAt     DateTime    @default(now())
+  updateAt     DateTime    @updatedAt
+  testDevice   testDevice? @relation(fields: [testDeviceId], references: [id])
+  testDeviceId String?     @db.ObjectId
 }

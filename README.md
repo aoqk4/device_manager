@@ -226,3 +226,29 @@ export default async function handler(
   }
 }
 ```
+
+-- relation in prisma
+
+```
+model testDevice {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  product           String
+  location          String
+  type              String
+  unit              String?
+  memo              String?
+  createAt          DateTime            @default(now())
+  updateAt          DateTime            @updatedAt
+  testDeviceSencing testDeviceSencing[]  // 여러개의 value존재할수 있고..
+}
+
+model testDeviceSencing {
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  value    Float
+  device   testDevice? @relation(fields: [deviceid], references: [id]) // 하나의 (device id를 가진) testDevice존재.
+  deviceid String
+  createAt DateTime    @default(now())
+  updateAt DateTime    @updatedAt
+}
+
+```
