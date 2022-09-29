@@ -68,6 +68,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div id="센서목록" className="flex flex-wrap">
+          {0 < devices.length ? null : <div>등록된 장비가 없어요.</div>}
           {devices.map((device, idx) => {
             return <DeviceCard key={idx} device={device} chk={chk} />;
           })}

@@ -45,21 +45,25 @@ const Home: NextPage = () => {
     <Layout title={"DATA"}>
       <div>
         <div className="w-full flex flex-col items-center">
-          <select
-            className="h-12 ring-2 ring-black px-2 text-gray-800 m-6 w-[90%]"
-            onChange={(event) => {
-              SetId(event.currentTarget.value);
-            }}
-          >
-            <option hidden>장치를 선택하세요.</option>
-            {devices.map((device) => {
-              return (
-                <option key={device.id} value={device.id}>
-                  {device.product} - {device.location}
-                </option>
-              );
-            })}
-          </select>
+          {0 < devices.length ? null : <div>등록된 장비가 없어요.</div>}
+          {0 < devices.length && (
+            <select
+              className="h-12 ring-2 ring-black px-2 text-gray-800 m-6 w-[90%]"
+              onChange={(event) => {
+                SetId(event.currentTarget.value);
+              }}
+            >
+              <option hidden>장치를 선택하세요.</option>
+              {devices.map((device) => {
+                return (
+                  <option key={device.id} value={device.id}>
+                    {device.product} - {device.location}
+                  </option>
+                );
+              })}
+            </select>
+          )}
+
           {id ? (
             <div className="w-full flex flex-col items-center">
               <div>선택한 장비 id : {id}</div>{" "}
