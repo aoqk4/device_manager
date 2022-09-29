@@ -23,7 +23,7 @@ const Home: NextPage = () => {
       <div className="h-full overflow-y-scroll space-y-7">
         <div id="상단웰컴메시지" className="flex justify-between items-center">
           <div>
-            <div className="text-5xl font-bold">Hello ㅁㅁㅁ </div>
+            <div className="text-5xl font-bold">Hello LJS </div>
             <div className="text-gray-500">Welcome back to Home!</div>
           </div>
           <Link href={"/setting"}>
