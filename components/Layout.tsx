@@ -130,6 +130,9 @@ export default function Layout(props: LayoutProps) {
                 </div>
               </button>
             </Link>
+            <Link href={"/cntour"}>
+              <button>관광</button>
+            </Link>
           </nav>
         </footer>
       </div>
